@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-
 import type { BaseInputProps } from "@/types";
 import { EyeIcon, EyeOffIcon } from "@/assets";
 import { cn } from "@/lib/utils";
@@ -19,6 +18,7 @@ const CustomInput: React.FC<BaseInputProps> = ({
   labelColor = "text-black",
   fieldUseAs = "input",
   variant = "primary",
+  leftIcon,
   ...props
 }) => {
   const Component = fieldUseAs as React.ElementType;
@@ -37,7 +37,19 @@ const CustomInput: React.FC<BaseInputProps> = ({
           {isMandatory && <span className="text-red-500">*</span>}
         </label>
       )}
-      <div className="relative w-full">
+      <div
+        className={cn(
+          "flex items-center w-full text-[16px] rounded-tl-[10px] rounded-br-[10px] transition-all overflow-hidden",
+          disabled && "opacity-50 cursor-not-allowed",
+          inputVariants[variant],
+          className,
+        )}
+      >
+        {leftIcon && (
+          <div className="pl-3 flex items-center justify-center text-gray-500 pointer-events-none">
+            {leftIcon}
+          </div>
+        )}
         <Component
           autoFocus={autoFocus}
           id={name}
@@ -45,12 +57,7 @@ const CustomInput: React.FC<BaseInputProps> = ({
           type={inputType}
           disabled={disabled}
           placeholder={placeholder}
-          className={cn(
-            "w-full px-4 py-3 text-[16px] rounded-tl-[10px] rounded-br-[10px] placeholder-[#949494] placeholder:text-sm outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed",
-            type === "password" && "pr-12",
-            inputVariants[variant],
-            className,
-          )}
+          className="flex-1 bg-transparent px-4 py-3 placeholder-[#949494] placeholder:text-sm outline-none min-w-0 w-full"
           onWheel={(
             e: React.WheelEvent<HTMLInputElement | HTMLTextAreaElement>,
           ) => e.currentTarget.blur()}
@@ -59,7 +66,7 @@ const CustomInput: React.FC<BaseInputProps> = ({
         {type === "password" && (
           <button
             type="button"
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 outline-none cursor-pointer"
+            className="pr-4 pl-2 text-gray-500 hover:text-gray-700 outline-none cursor-pointer flex items-center justify-center"
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}

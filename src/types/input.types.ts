@@ -13,6 +13,7 @@ export interface BaseInputProps extends Omit<InputHTMLAttributes<HTMLInputElemen
     tooltipPosition?: "top" | "bottom" | "left" | "right";
     fieldUseAs?: "input" | "textarea";
     variant?: InputVariant;
+    leftIcon?: ReactNode;
 }
 
 export interface FormikInputProps extends BaseInputProps {
