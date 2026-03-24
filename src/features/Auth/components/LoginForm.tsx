@@ -2,6 +2,9 @@ import * as Yup from "yup";
 
 import { CustomButton, CustomFormikInput, FormikWrapper } from "@/components";
 import { MailIcon, LockIcon } from "@/assets";
+import { useMutation } from "@tanstack/react-query";
+import { useAppDispatch } from "@/redux";
+import { setAuthenticated } from "../auth-slice/auth-slice";
 
 const loginValidationSchema = Yup.object().shape({
   email: Yup.string()
@@ -16,13 +19,22 @@ const loginValidationSchema = Yup.object().shape({
 });
 
 export const LoginForm = () => {
+  const dispatch = useAppDispatch();
+
   const initialValues = {
     email: "",
     password: "",
   };
 
+  const { mutate: loginMutation } = useMutation({
+    mutationFn: async (data: typeof initialValues) => {
+      console.log("data", data);
+      dispatch(setAuthenticated(true));
+    },
+  });
+
   const handleSubmit = (values: typeof initialValues) => {
-    console.log(values);
+    loginMutation(values);
   };
 
   return (
