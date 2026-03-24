@@ -31,8 +31,18 @@ export const LoginForm = () => {
       validationSchema={loginValidationSchema}
       Component={() => (
         <div className="flex flex-col gap-y-8">
-          <CustomFormikInput name="email" label="Email" />
-          <CustomFormikInput name="password" label="Password" />
+          <CustomFormikInput
+            name="email"
+            label="Email"
+            placeholder="Enter your email"
+            variant="outline"
+          />
+          <CustomFormikInput
+            name="password"
+            label="Password"
+            placeholder="Enter your password"
+            variant="outline"
+          />
         </div>
       )}
     />

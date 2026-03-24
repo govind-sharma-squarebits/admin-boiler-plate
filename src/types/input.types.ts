@@ -1,6 +1,8 @@
 import type { InputHTMLAttributes, ReactNode } from "react";
 
 
+export type InputVariant = "primary" | "secondary" | "outline" | "ghost" | "danger" | "success";
+
 export interface BaseInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "name"> {
     name?: string;
     label?: ReactNode;
@@ -10,6 +12,7 @@ export interface BaseInputProps extends Omit<InputHTMLAttributes<HTMLInputElemen
     helpText?: string;
     tooltipPosition?: "top" | "bottom" | "left" | "right";
     fieldUseAs?: "input" | "textarea";
+    variant?: InputVariant;
 }
 
 export interface FormikInputProps extends BaseInputProps {

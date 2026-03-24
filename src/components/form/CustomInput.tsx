@@ -3,6 +3,8 @@
 import React from "react";
 
 import type { BaseInputProps } from "@/types";
+import { cn } from "@/lib/utils";
+import { inputVariants } from "./input.constants";
 
 const CustomInput: React.FC<BaseInputProps> = ({
   label,
@@ -15,6 +17,7 @@ const CustomInput: React.FC<BaseInputProps> = ({
   autoFocus = false,
   labelColor = "text-black",
   fieldUseAs = "input",
+  variant = "primary",
   ...props
 }) => {
   const Component = fieldUseAs as React.ElementType;
@@ -37,7 +40,11 @@ const CustomInput: React.FC<BaseInputProps> = ({
         type={type}
         disabled={disabled}
         placeholder={placeholder}
-        className={`w-full px-4 py-3 bg-[#F8F8F8] text-[16px] rounded-lg placeholder-[#949494] placeholder:text-sm outline-none focus:ring-2 focus:ring-blue-500/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all ${className}`}
+        className={cn(
+          "w-full px-4 py-3 text-[16px] rounded-tl-[10px] rounded-br-[10px] placeholder-[#949494] placeholder:text-sm outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed",
+          inputVariants[variant],
+          className
+        )}
         onWheel={(
           e: React.WheelEvent<HTMLInputElement | HTMLTextAreaElement>,
         ) => e.currentTarget.blur()}

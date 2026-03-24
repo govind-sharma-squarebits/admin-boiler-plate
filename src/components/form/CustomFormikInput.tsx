@@ -7,6 +7,8 @@ import { Field, useField } from "formik";
 import { InfoIcon } from "@/assets";
 import type { FormikInputProps } from "@/types";
 import { CustomTooltip } from "../CustomTooltip";
+import { cn } from "@/lib/utils";
+import { inputVariants } from "./input.constants";
 
 export const CustomFormikInput: React.FC<FormikInputProps> = ({
   label,
@@ -22,6 +24,7 @@ export const CustomFormikInput: React.FC<FormikInputProps> = ({
   max,
   helpText,
   tooltipPosition = "bottom",
+  variant = "primary",
   onInput,
   ...props
 }) => {
@@ -55,11 +58,12 @@ export const CustomFormikInput: React.FC<FormikInputProps> = ({
         type={type}
         disabled={disabled}
         placeholder={placeholder}
-        className={`w-full px-4 py-3 bg-[#F8F8F8] text-[16px] rounded-lg placeholder-[#949494] placeholder:text-sm outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
-          isError
-            ? "border border-red-500 focus:ring-2 focus:ring-red-500/20"
-            : "border border-transparent focus:ring-2 focus:ring-blue-500/20"
-        } ${className}`}
+        className={cn(
+          "w-full px-4 py-3 text-[16px] rounded-leaf placeholder-[#949494] placeholder:text-sm outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed",
+          inputVariants[variant],
+          isError && inputVariants["danger"],
+          className,
+        )}
         onWheel={(e: React.WheelEvent<HTMLInputElement>) =>
           e.currentTarget.blur()
         }
