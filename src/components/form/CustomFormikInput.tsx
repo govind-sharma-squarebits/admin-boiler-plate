@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
+
 import { Field, useField } from "formik";
-import { InfoIcon, EyeIcon, EyeOffIcon } from "@/assets";
+
+import { EyeIcon, EyeOffIcon, InfoIcon } from "@/assets";
+import { cn } from "@/lib/utils";
 import type { FormikInputProps } from "@/types";
 import { CustomTooltip } from "../CustomTooltip";
-import { cn } from "@/lib/utils";
 import { inputVariants } from "./input.constants";
 
 export const CustomFormikInput: React.FC<FormikInputProps> = ({
