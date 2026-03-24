@@ -1,0 +1,1 @@
+export * from "./svg-component/ic_Info";

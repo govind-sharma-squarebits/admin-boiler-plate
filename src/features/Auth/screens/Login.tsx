@@ -1,5 +1,9 @@
-const Login = () => {
-  return <div></div>;
-};
+import { LoginForm } from "../components/LoginForm";
 
-export default Login;
+export const Login = () => {
+  return (
+    <div className="bg-white">
+      <LoginForm />
+    </div>
+  );
+};

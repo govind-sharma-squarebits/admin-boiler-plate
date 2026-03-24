@@ -3,3 +3,4 @@ export * from "./auth-slice/auth-slice";
 export * from "./auth-routes";
 
 export * from "./components/LoginForm";
+export * from "./screens/Login";

@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-import { FormikWrapper } from "@/components";
+import { CustomFormikInput, FormikWrapper } from "@/components";
 
 const loginValidationSchema = Yup.object().shape({
   email: Yup.string()
@@ -29,7 +29,12 @@ export const LoginForm = () => {
       initialValues={initialValues}
       onSubmit={handleSubmit}
       validationSchema={loginValidationSchema}
-      Component={() => <></>}
+      Component={() => (
+        <div className="flex flex-col gap-y-8">
+          <CustomFormikInput name="email" label="Email" />
+          <CustomFormikInput name="password" label="Password" />
+        </div>
+      )}
     />
   );
 };
