@@ -5,3 +5,5 @@ export * from "./FormikWrapper";
 
 export * from "./form/CustomInput";
 export * from "./form/CustomFormikInput";
+
+export * from './CustomButton'

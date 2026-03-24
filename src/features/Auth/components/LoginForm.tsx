@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-import { CustomFormikInput, FormikWrapper } from "@/components";
+import { CustomButton, CustomFormikInput, FormikWrapper } from "@/components";
 
 const loginValidationSchema = Yup.object().shape({
   email: Yup.string()
@@ -39,10 +39,13 @@ export const LoginForm = () => {
           />
           <CustomFormikInput
             name="password"
+            type="password"
             label="Password"
             placeholder="Enter your password"
             variant="outline"
           />
+
+          <CustomButton className="rounded-leaf">Sign In</CustomButton>
         </div>
       )}
     />
