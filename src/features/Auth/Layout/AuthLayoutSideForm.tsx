@@ -1,7 +1,7 @@
-import { CenteredBox } from "@/components";
+import { CenteredBox, withoutAuth } from "@/components";
 import { Outlet } from "react-router-dom";
 
-export const AuthLayoutSideForm = () => {
+export const AuthLayoutSideForm = withoutAuth(() => {
   return (
     <div className="h-dvh grid grid-cols-[55%_1fr]">
       <div className="h-full bg-blue-500"></div>
@@ -10,4 +10,4 @@ export const AuthLayoutSideForm = () => {
       </CenteredBox>
     </div>
   );
-};
+});

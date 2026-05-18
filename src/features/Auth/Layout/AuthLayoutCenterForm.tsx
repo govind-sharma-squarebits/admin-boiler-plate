@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
 
-import { CenteredBox } from "@/components";
+import { CenteredBox, withoutAuth } from "@/components";
 
-export const AuthLayoutCenterForm = () => {
+export const AuthLayoutCenterForm = withoutAuth(() => {
   return (
     <div className="h-dvh bg-red-500">
       <CenteredBox className="h-full">
@@ -10,4 +10,4 @@ export const AuthLayoutCenterForm = () => {
       </CenteredBox>
     </div>
   );
-};
+});

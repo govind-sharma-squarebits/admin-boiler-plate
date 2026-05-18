@@ -5,7 +5,8 @@ import { CustomButton, CustomFormikInput, FormikWrapper } from "@/components";
 import { AppUrls } from "@/constants";
 import { useAppDispatch } from "@/redux";
 import { Link } from "react-router-dom";
-import { handleSignIn } from "../auth-slice/auth-slice";
+import { getAuthData, handleSignIn } from "../auth-slice/auth-slice";
+import { useSelector } from "react-redux";
 
 const loginValidationSchema = Yup.object().shape({
   email: Yup.string()
@@ -20,6 +21,7 @@ const loginValidationSchema = Yup.object().shape({
 });
 
 export const LoginForm = () => {
+  const { isAuthLoading } = useSelector(getAuthData);
   const dispatch = useAppDispatch();
 
   const initialValues = {
@@ -63,7 +65,9 @@ export const LoginForm = () => {
             }
           />
 
-          <CustomButton size="lg">Sign In</CustomButton>
+          <CustomButton size="lg" isLoading={isAuthLoading}>
+            Sign In
+          </CustomButton>
 
           <Link
             to={AppUrls.FORGOT_PASSWORD}

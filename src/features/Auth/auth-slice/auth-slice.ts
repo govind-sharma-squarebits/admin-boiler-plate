@@ -56,9 +56,11 @@ export const handleLogout = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axiosAuth.post(API_URL.AUTH.LOGOUT);
+      console.log("response", response);
       return thunkAPI.fulfillWithValue(response.data.data);
     } catch (error) {
       if (error instanceof AxiosError) {
+        console.log("response error", error);
         return thunkAPI.rejectWithValue(error.response?.data);
       }
       return thunkAPI.rejectWithValue(error);
@@ -102,19 +104,19 @@ export const authSlice = createSlice({
         localStorage.setItem("accessToken", state.accessToken || "");
         localStorage.setItem("refreshToken", state.refreshToken || "");
       }
+    });
 
-      builder.addCase(handleSignIn.rejected, (state) => {
-        state.isAuthLoading = false;
-      });
+    builder.addCase(handleSignIn.rejected, (state) => {
+      state.isAuthLoading = false;
+    });
 
-      builder.addCase(handleLogout.fulfilled, (state) => {
-        state.isAuthenticated = false;
-        state.user = null;
-        state.accessToken = "";
-        state.refreshToken = "";
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-      });
+    builder.addCase(handleLogout.fulfilled, (state) => {
+      state.isAuthenticated = false;
+      state.user = null;
+      state.accessToken = "";
+      state.refreshToken = "";
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
     });
   },
 });
