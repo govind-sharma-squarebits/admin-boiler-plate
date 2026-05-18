@@ -47,7 +47,7 @@ export const CustomButton: React.FC<ButtonProps> = ({
     <button
       disabled={disabled || isLoading}
       className={cn(
-        "h-12 rounded-leaf text-lg inline-flex items-center gap-2 justify-center font-medium transition-all duration-200 outline-none focus:ring-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none",
+        "cursor-pointer h-12 rounded-leaf text-lg inline-flex items-center gap-2 justify-center font-medium transition-all duration-200 outline-none focus:ring-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none ",
         buttonVariants[variant],
         sizeVariants[size],
         className,

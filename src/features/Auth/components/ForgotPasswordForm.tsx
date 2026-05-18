@@ -1,14 +1,11 @@
+import { MailIcon } from "@/assets";
+import { CustomButton, CustomFormikInput, FormikWrapper } from "@/components";
+import { AppUrls } from "@/constants";
+import { useMutation } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 import * as Yup from "yup";
 
-import { CustomButton, CustomFormikInput, FormikWrapper } from "@/components";
-import { MailIcon, LockIcon } from "@/assets";
-import { useMutation } from "@tanstack/react-query";
-import { useAppDispatch } from "@/redux";
-import { setAuthenticated } from "../auth-slice/auth-slice";
-import { Link } from "react-router-dom";
-import { AppUrls } from "@/constants";
-
-const loginValidationSchema = Yup.object().shape({
+const forgotPasswordValidationSchema = Yup.object().shape({
   email: Yup.string()
     .trim()
     .email("Email must be valid")
@@ -17,33 +14,28 @@ const loginValidationSchema = Yup.object().shape({
       "Email is not valid",
     )
     .required("Email is required"),
-  password: Yup.string().required("Password is required"),
 });
 
-export const LoginForm = () => {
-  const dispatch = useAppDispatch();
-
+export const ForgotPasswordForm = () => {
   const initialValues = {
     email: "",
-    password: "",
   };
 
-  const { mutate: loginMutation } = useMutation({
+  const { mutate: forgotPasswordMutation } = useMutation({
     mutationFn: async (data: typeof initialValues) => {
       console.log("data", data);
-      dispatch(setAuthenticated(true));
     },
   });
 
   const handleSubmit = (values: typeof initialValues) => {
-    loginMutation(values);
+    forgotPasswordMutation(values);
   };
 
   return (
     <FormikWrapper
       initialValues={initialValues}
       onSubmit={handleSubmit}
-      validationSchema={loginValidationSchema}
+      validationSchema={forgotPasswordValidationSchema}
       Component={() => (
         <div className="flex flex-col gap-y-8">
           <CustomFormikInput
@@ -58,26 +50,10 @@ export const LoginForm = () => {
             }
           />
 
-          <CustomFormikInput
-            isMandatory
-            name="password"
-            type="password"
-            label="Password"
-            placeholder="Enter your password"
-            leftIcon={
-              <div className="p-2 px-3 bg-white rounded-leaf ">
-                <LockIcon size={20} stroke="orange" />
-              </div>
-            }
-          />
+          <CustomButton size="lg">Submit</CustomButton>
 
-          <CustomButton size="lg">Sign In</CustomButton>
-
-          <Link
-            to={AppUrls.FORGOT_PASSWORD}
-            className="text-center w-fit mx-auto"
-          >
-            Forgot password?
+          <Link to={AppUrls.LOGIN} className="text-center w-fit mx-auto">
+            Back to login
           </Link>
         </div>
       )}

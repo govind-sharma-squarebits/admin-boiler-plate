@@ -1,4 +1,6 @@
 export { AuthLayoutCenterForm } from "./Layout/AuthLayoutCenterForm";
+export {AuthLayoutSideForm} from "./Layout/AuthLayoutSideForm";
+
 export * from "./auth-slice/auth-slice";
 export * from "./auth-routes";
 
