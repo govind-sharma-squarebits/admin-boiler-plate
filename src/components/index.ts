@@ -12,3 +12,7 @@ export * from "./SideBar";
 
 export * from "./modals/ChildrenModal";
 export * from "./modals/confirmation-modal/ConfirmationModal";
+
+export * from "./DataTable/DataTable";
+export * from "./Checkbox";
+export * from "./CustomTooltip";
