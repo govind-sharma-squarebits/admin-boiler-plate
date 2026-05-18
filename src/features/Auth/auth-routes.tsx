@@ -1,11 +1,11 @@
 import { AppUrls } from "@/constants";
 
-import { AuthLayoutSideForm } from "./Layout/AuthLayoutSideForm";
+import { AuthLayoutCenterForm } from "./Layout/AuthLayoutCenterForm";
 import { ForgotPasswordScreen } from "./screens/ForgotPassword";
 import { Login } from "./screens/Login";
 
 export const AuthRoutes = {
-  element: <AuthLayoutSideForm />,
+  element: <AuthLayoutCenterForm />,
   children: [
     {
       path: AppUrls.LOGIN,
