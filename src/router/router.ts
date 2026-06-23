@@ -1,6 +1,7 @@
 import { AuthRoutes, MainRoutes } from "@/features";
 import { useRoutes } from "react-router-dom";
+import type { RouteObject } from "react-router-dom";
 
 export const Router = () => {
-  return useRoutes([AuthRoutes, MainRoutes]);
+  return useRoutes([AuthRoutes, MainRoutes] as RouteObject[]);
 };
