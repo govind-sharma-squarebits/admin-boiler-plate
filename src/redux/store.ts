@@ -5,15 +5,34 @@ import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, R
 
 import { rootReducer, type RootStateReducer } from "./reducer";
 import storageImport from 'redux-persist/lib/storage';
+import { createTransform } from "redux-persist";
+import type { AuthState } from "@/types";
 
 const storage: WebStorage =
     (storageImport as unknown as { default?: WebStorage }).default ?? storageImport;
+
+const authSubsetTransform = createTransform<AuthState, Omit<AuthState, "accessToken" | "refreshToken">>(
+  (inboundState) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { accessToken, refreshToken, ...rest } = inboundState;
+    return rest;
+  },
+  (outboundState) => {
+    return {
+      ...outboundState,
+      accessToken: "",
+      refreshToken: "",
+    };
+  },
+  { whitelist: ["auth"] }
+);
 
 const persistConfig = {
     key: 'admin-boiler-plate-root',
     version: 1,
     storage: storage,
     whitelist: ['auth'],
+    transforms: [authSubsetTransform],
 };
 
 const persistedReducer = persistReducer<RootStateReducer>(persistConfig, rootReducer);

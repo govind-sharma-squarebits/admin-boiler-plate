@@ -6,3 +6,5 @@ export * from "./user.types";
 export * from "./navigation.types";
 export * from "./data-table.types";
 export * from "./react-select.types";
+export * from "./api.types";
+

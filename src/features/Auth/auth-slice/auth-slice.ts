@@ -82,6 +82,20 @@ export const authSlice = createSlice({
         state.loginProgress = 0;
       }
     },
+
+    logout: (state) => {
+      state.isAuthenticated = false;
+      state.user = null;
+      state.accessToken = "";
+      state.refreshToken = "";
+    },
+
+    setTokensInRedux: (
+      state,
+      action: PayloadAction<{ accessToken: string }>,
+    ) => {
+      state.accessToken = action.payload.accessToken;
+    },
   },
 
   extraReducers: (builder) => {
@@ -100,9 +114,6 @@ export const authSlice = createSlice({
         state.user = action.payload.user;
         state.accessToken = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken;
-
-        localStorage.setItem("accessToken", state.accessToken || "");
-        localStorage.setItem("refreshToken", state.refreshToken || "");
       }
     });
 
@@ -115,13 +126,11 @@ export const authSlice = createSlice({
       state.user = null;
       state.accessToken = "";
       state.refreshToken = "";
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
     });
   },
 });
 
-export const { setAuthenticated } = authSlice.actions;
+export const { setAuthenticated, logout, setTokensInRedux } = authSlice.actions;
 export const authReducer = authSlice.reducer;
 
 export const getAuthData = (state: RootStateReducer) => state.auth;

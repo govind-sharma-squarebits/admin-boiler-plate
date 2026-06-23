@@ -23,10 +23,8 @@ axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 axios.defaults.headers.common["device-type"] = "WEB";
 axios.defaults.headers.common["device-name"] =
   `${browser?.name} ${browser?.version}`;
-axios.defaults.headers.common["device-id"] =
-  // typeof clientBrowserId === "string" ? clientBrowserId : "";
-  axios.defaults.headers.common["app-environment"] = import.meta.env
-    .VITE_APP_ENVIRONMENT as string;
+axios.defaults.headers.common["app-environment"] = import.meta.env
+  .VITE_APP_ENVIRONMENT as string;
 
 // Status range constants
 const SUCCESS_RANGE = "SUCCESS_RANGE";
@@ -161,11 +159,13 @@ const handleResponse = ({
 export const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL as string,
   responseType: "json",
+  withCredentials: true,
 });
 
 export const axiosAuth = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL as string,
   responseType: "json",
+  withCredentials: true,
 });
 
 // Interceptors
@@ -228,16 +228,18 @@ axiosAuth.interceptors.response.use(
 
 // Request Interceptor for Authenticated Axios
 axiosAuth.interceptors.request.use(
-  (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-    const Token = localStorage.getItem("accessToken") || "";
-    // const Token = store.getState()?.[_AUTH_KEY]?.token.accessToken;
+  async (config: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> => {
+    try {
+      const { store } = await import("@/redux/store");
+      const Token = store.getState().auth.accessToken;
 
-    config.headers = config.headers || {};
-    config.headers.Authorization = `Bearer ${Token}`;
-
-    // if (deviceToken) {
-    //   config.headers['device-token'] = deviceToken;
-    // }
+      if (Token) {
+        config.headers = config.headers || {};
+        config.headers.Authorization = `Bearer ${Token}`;
+      }
+    } catch (e) {
+      console.error("Failed to load redux store in interceptor", e);
+    }
 
     return config;
   },
