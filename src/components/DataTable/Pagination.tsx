@@ -60,7 +60,7 @@ export const Pagination = ({
           className={clsx(
             "min-w-[32px] h-[32px] px-1.5 flex items-center justify-center rounded-[10px] text-sm font-bold transition-colors",
             page === p
-              ? "bg-[#FDAF08] text-white"
+              ? "bg-accent text-white"
               : "bg-transparent text-gray-700 hover:bg-gray-100"
           )}
         >

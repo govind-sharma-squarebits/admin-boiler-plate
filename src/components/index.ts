@@ -16,3 +16,5 @@ export * from "./modals/confirmation-modal/ConfirmationModal";
 export * from "./DataTable/DataTable";
 export * from "./Checkbox";
 export * from "./CustomTooltip";
+
+export * from "./UnderDevelopment";

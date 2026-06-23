@@ -17,7 +17,7 @@ const legend = [
     label: "Admin Registration",
   },
   {
-    color: "#FDAF08", // customColors.orange equivalent
+    color: "var(--color-accent)", // customColors.orange equivalent
     label: "Self Registration",
   },
 ];

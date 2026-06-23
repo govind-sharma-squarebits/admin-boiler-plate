@@ -1,6 +1,6 @@
 .ios-checkbox {
   --checkbox-size: 28px;
-  --checkbox-color: #fdaf08;
+  --checkbox-color: var(--color-accent);
   --checkbox-bg: #dbeafe;
   --checkbox-border: #000000;
   --checkbox-border-disabled: #696969;

@@ -50,7 +50,7 @@ export const SideBar: React.FC = () => {
                 <div className="text-left relative p-2.5 px-5 cursor-pointer">
                   {active && (
                     <motion.span
-                      className="bg-[#FDAF08] absolute z-1 rounded-lg inset-0"
+                      className="bg-accent absolute z-1 rounded-lg inset-0"
                       layoutId="navItem"
                       transition={{
                         type: "spring",

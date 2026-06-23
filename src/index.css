@@ -2,11 +2,16 @@
 
 @theme {
   --color-primary: #3b55a3;
+  --color-primary-light: #90a2d7;
+  --color-accent: #FDAF08;
+  --color-accent-light: rgba(253, 175, 8, 0.3);
+
+  --font-sans: "Poppins", sans-serif;
 }
 
 @layer base {
   body {
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-sans);
   }
 }
 

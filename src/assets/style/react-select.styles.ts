@@ -9,7 +9,7 @@ export const customSelectStyles: StylesConfig<Option, false> = {
     borderBottomLeftRadius: "0.5rem",
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
-    backgroundColor: "#FDAF08",
+    backgroundColor: "var(--color-accent)",
     color: "#ffffff",
     height: "48px",
     minWidth: "100px",
@@ -36,9 +36,9 @@ export const customSelectStyles: StylesConfig<Option, false> = {
   option: (base, state) => ({
     ...base,
     backgroundColor: state.isSelected
-      ? "#FDAF08"
+      ? "var(--color-accent)"
       : state.isFocused
-        ? "#FDAF084D"
+        ? "var(--color-accent-light)"
         : "white",
     color: state.isSelected || state.isFocused ? "#fff" : "#949494",
     padding: "8px 14px",
@@ -91,9 +91,9 @@ export const customStyles = <T extends OptionType>({
     // border: `1px solid ${theme.palette.text.secondary}`,
     // borderRadius: "6px",
     backgroundColor: state.isSelected
-      ? "#FDAF08" // Purple background when selected
+      ? "var(--color-accent)" // Purple background when selected
       : state.isFocused
-        ? "#90a2d7" // Gray background when hovered
+        ? "var(--color-primary-light)" // Gray background when hovered
         : "white", // Transparent by default
     color: state.isSelected || state.isFocused ? "#fff" : "#646464", // Adjust text colors
     padding: "8px 14px", // Adjust padding
