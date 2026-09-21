@@ -8,8 +8,8 @@ export interface LoginInitialValues {
 export interface AuthState {
   isAuthenticated: boolean;
   isAuthLoading: boolean;
+  isSessionChecked: boolean;
   user: UserType | null;
   loginProgress: number;
   accessToken: string;
-  refreshToken: string;
 }

@@ -215,11 +215,16 @@ axiosAuth.interceptors.response.use(
     const response = error.response.data;
     console.log("res", response);
     const message = response?.message;
+    const isRefreshRequest = error?.config?.url?.includes(API_URL.AUTH.REFRESH_TOKEN);
+
+    if (isRefreshRequest) {
+      return Promise.reject(error);
+    }
 
     if (response?.status == "error" || !response?.success) {
       if (message == "jwt expired") return Promise.reject(error);
       if (message) showErrorToast(message);
-    } else if (error?.config?.url !== API_URL.AUTH.REFRESH_TOKEN) {
+    } else {
       handleResponse({ response: error.response });
     }
     return Promise.reject(error);

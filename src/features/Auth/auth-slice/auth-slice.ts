@@ -13,10 +13,10 @@ import { AxiosError } from "axios";
 const initialState: AuthState = {
   isAuthenticated: false,
   isAuthLoading: false,
+  isSessionChecked: false,
   user: null,
   loginProgress: 0,
   accessToken: "",
-  refreshToken: "",
 };
 
 export const setLoginProgress = createAction<number>("auth/setLoginProgress");
@@ -87,7 +87,6 @@ export const authSlice = createSlice({
       state.isAuthenticated = false;
       state.user = null;
       state.accessToken = "";
-      state.refreshToken = "";
     },
 
     setTokensInRedux: (
@@ -95,6 +94,10 @@ export const authSlice = createSlice({
       action: PayloadAction<{ accessToken: string }>,
     ) => {
       state.accessToken = action.payload.accessToken;
+    },
+
+    setSessionChecked: (state, action: PayloadAction<boolean>) => {
+      state.isSessionChecked = action.payload;
     },
   },
 
@@ -111,9 +114,9 @@ export const authSlice = createSlice({
       state.isAuthLoading = false;
       if (action.payload) {
         state.isAuthenticated = true;
+        state.isSessionChecked = true;
         state.user = action.payload.user;
         state.accessToken = action.payload.accessToken;
-        state.refreshToken = action.payload.refreshToken;
       }
     });
 
@@ -125,12 +128,12 @@ export const authSlice = createSlice({
       state.isAuthenticated = false;
       state.user = null;
       state.accessToken = "";
-      state.refreshToken = "";
     });
   },
 });
 
-export const { setAuthenticated, logout, setTokensInRedux } = authSlice.actions;
+export const { setAuthenticated, logout, setTokensInRedux, setSessionChecked } =
+  authSlice.actions;
 export const authReducer = authSlice.reducer;
 
 export const getAuthData = (state: RootStateReducer) => state.auth;

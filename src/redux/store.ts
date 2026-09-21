@@ -11,28 +11,30 @@ import type { AuthState } from "@/types";
 const storage: WebStorage =
     (storageImport as unknown as { default?: WebStorage }).default ?? storageImport;
 
-const authSubsetTransform = createTransform<AuthState, Omit<AuthState, "accessToken" | "refreshToken">>(
-  (inboundState) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { accessToken, refreshToken, ...rest } = inboundState;
-    return rest;
-  },
-  (outboundState) => {
-    return {
-      ...outboundState,
-      accessToken: "",
-      refreshToken: "",
-    };
-  },
+type PersistedAuthState = Pick<AuthState, "user">;
+
+const authSubsetTransform = createTransform<AuthState, PersistedAuthState>(
+  (inboundState) => ({
+    user: inboundState.user,
+  }),
+  (outboundState) => ({
+    user: outboundState.user ?? null,
+    isAuthenticated: false,
+    isAuthLoading: false,
+    isSessionChecked: false,
+    accessToken: "",
+    loginProgress: 0,
+  }),
   { whitelist: ["auth"] }
 );
 
 const persistConfig = {
     key: 'admin-boiler-plate-root',
-    version: 1,
+    version: 2,
     storage: storage,
     whitelist: ['auth'],
     transforms: [authSubsetTransform],
+    migrate: () => Promise.resolve(undefined),
 };
 
 const persistedReducer = persistReducer<RootStateReducer>(persistConfig, rootReducer);

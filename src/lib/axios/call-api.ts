@@ -14,6 +14,16 @@ export const getStore = async () => {
   return store;
 };
 
+export const ensureRefreshToken = (): Promise<{ data: RefreshTokenData } | { error: true }> => {
+  if (!refreshTokenPromise) {
+    refreshTokenPromise = refreshTokenRequest().finally(() => {
+      refreshTokenPromise = null;
+    });
+  }
+
+  return refreshTokenPromise;
+};
+
 export const refreshTokenRequest = async (): Promise<{ data: RefreshTokenData } | { error: true }> => {
   const authErrorCode = 401;
   try {
@@ -70,40 +80,38 @@ export const callApiFn = async <T>({
           error.response?.status === authErrorCode ||
           error.response?.data?.statusCode === authErrorCode
         ) {
-          if (!refreshTokenPromise) {
-            refreshTokenPromise = refreshTokenRequest();
-          }
-
           try {
-            // Await the shared refresh token promise to deduplicate requests
-            const refreshResponse = await refreshTokenPromise;
-            refreshTokenPromise = null;
+            const refreshResponse = await ensureRefreshToken();
             if (refreshResponse) {
-              // Save the new tokens
               const store = await getStore();
+              const accessToken =
+                "data" in refreshResponse &&
+                refreshResponse.data &&
+                typeof refreshResponse.data === "object" &&
+                "accessToken" in refreshResponse.data
+                  ? refreshResponse.data.accessToken
+                  : undefined;
 
-              if ("data" in refreshResponse) {
-                const { accessToken } = refreshResponse.data;
-
+              if (accessToken) {
                 store.dispatch(
                   setTokensInRedux({
                     accessToken,
                   })
                 );
+
+                const retryResponse = await apiRequest(axiosAuth);
+                return extractDataFromResponse<T>({
+                  response: retryResponse,
+                  successCode,
+                  showToastOnSuccess,
+                });
               }
 
-              // Retry the original API request with the new token
-              const retryResponse = await apiRequest(axiosAuth);
-              return extractDataFromResponse<T>({
-                response: retryResponse,
-                successCode,
-                showToastOnSuccess,
-              });
+              store.dispatch(logout());
+              return { error: true } as ParseApiErrorResponseResult;
             }
           } catch (refreshError) {
             console.log("refresh token error", refreshError);
-            refreshTokenPromise = null;
-            // Handle token refresh failure
             const store = await getStore();
             store.dispatch(logout());
             return { error: true } as ParseApiErrorResponseResult;

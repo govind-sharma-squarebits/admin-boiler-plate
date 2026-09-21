@@ -17,15 +17,15 @@ export const withAuth = <P extends object>(
 ) => {
   return function IsAuth(props: P) {
     const navigate = useNavigate();
-    const isAuthenticated = useAppSelector(getAuthData).isAuthenticated;
+    const { isAuthenticated, isSessionChecked } = useAppSelector(getAuthData);
 
     useEffect(() => {
-      if (!isAuthenticated) {
+      if (isSessionChecked && !isAuthenticated) {
         navigate(AppUrls.LOGIN);
       }
-    }, [isAuthenticated, navigate]);
+    }, [isAuthenticated, isSessionChecked, navigate]);
 
-    if (!isAuthenticated) {
+    if (!isSessionChecked || !isAuthenticated) {
       return <>loading</>;
     }
 
